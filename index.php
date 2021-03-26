@@ -19,7 +19,6 @@ $url = $_SERVER['REQUEST_URI'];
 $cleanUrl = ltrim($url, '/');
 //explode the string into it's values
 $pathArray = explode('/', $cleanUrl);
-
 //If we have both, we have a valid Link
 if(array_key_exists(0, $pathArray) && array_key_exists(1, $pathArray)){
    $uuid = $pathArray[0];
