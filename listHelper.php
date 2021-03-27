@@ -1,6 +1,6 @@
 <?php
 
-//Class toß better interface with the JSOn LISTS and do various kinds of things
+//Class to better interface with the JSOn LISTS and do various kinds of things
 class listHelper {
    private $_loginKey = null;
    private $_uuid = null;

@@ -6,9 +6,16 @@
          let list = !%%%JSON%%%!;
       </script>
        <script src="/listHelper.js"></script> 
+       <script src="/gridHelper.js"></script> 
+       <script>
+         window.onload = function () {
+            ListHelperOnLoad();
+            GridHelperOnLoad();
+         };
+       </script>
    </head>
    <body>
-      <h1>Version 0.1a List Management</h1>
+      <h1>Version 0.1b List Management</h1>
       <div class="grid-container">
          <div class="navbar">
             <select id="listsDropDown"></select>

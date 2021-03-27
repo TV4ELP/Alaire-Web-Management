@@ -1,8 +1,15 @@
-window.onload = function () {
+function ListHelperOnLoad(){
    let select = document.querySelector('#listsDropDown');
    //Add Event Listener to render on change
    select.addEventListener("change", fillWithListOnchange)
 
+   //Add a default unselectable Option
+   let defaultOption = document.createElement("option");
+   defaultOption.selected = true;
+   defaultOption.disabled = true;
+   defaultOption.text = "Please choose a list";
+   select.add(defaultOption);
+   
    //now add all options
    list.forEach(element => {
       const keys = Object.keys(element);
@@ -11,14 +18,17 @@ window.onload = function () {
       option.value = keys[0];
       select.add(option);
    });
-};
+}
 
+//Add all images
 function fillWithListOnchange(){
    let listName = this.value;
    let container = document.querySelector('.grid-container .list');
    const json = getListWithName(listName);
 
-   if(json) doADumbPrintPls(container, json);
+   if(json) {
+      doADumbPrintPls(container, json);
+   }
 }
 
 
@@ -29,7 +39,6 @@ function getListWithName(name){
       const listname = Object.keys(element)[0];
       if(name === listname) ret = element[listname];
    });
-   console.log(ret);
    return ret;
 }
 
@@ -38,16 +47,22 @@ function doADumbPrintPls(container, json){
    const images = json.images;
    container.innerHTML = "";
    images.forEach(element => {
-      let div = document.createElement("div");
-      div.className = "imageContainer";
+      let grid = document.createElement("div");
+      grid.className = "imageContainer";
 
+      //We need a content div to calculate the actual height with the item height
+      let contentDiv = document.createElement("div");
+      contentDiv.className = "content";
+
+      //Create the image
       let img = document.createElement("img");
-      let span = document.createElement("span");
       img.src = element.url;
-      div.appendChild(img);
-      span.innerHTML = JSON.stringify(element);
-      div.appendChild(span);
-
-      container.appendChild(div);
-   })
+      img.addEventListener("load", onLoadResize);
+      //Put Image into Content
+      contentDiv.appendChild(img);
+      //Put content into grid
+      grid.appendChild(contentDiv);
+      //Put grid into container
+      container.appendChild(grid);
+   });
 }
