@@ -15,10 +15,9 @@ function resizeGridItem(item){
 //Get the container and resize it
 function resizeAllGridItems(){
    allItems = document.getElementsByClassName("imageContainer");
-   allItems.forEach( element => {
-      resizeGridItem(element);
-   });
-
+   for(let i = 0; i < allItems.length; i++){
+     resizeGridItem(allItems[i]);
+   }
 }
 
 //We have the image Item on Load, we need to get the content and then the container

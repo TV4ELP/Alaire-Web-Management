@@ -46,9 +46,11 @@ function getListWithName(name){
 function doADumbPrintPls(container, json){
    const images = json.images;
    container.innerHTML = "";
-   images.forEach(element => {
+   images.forEach((element, index) => {
       let grid = document.createElement("div");
       grid.className = "imageContainer";
+      //Add index for easy manipulation of lists
+      grid.dataset.listIndex = index;
 
       //We need a content div to calculate the actual height with the item height
       let contentDiv = document.createElement("div");
@@ -58,11 +60,30 @@ function doADumbPrintPls(container, json){
       let img = document.createElement("img");
       img.src = element.url;
       img.addEventListener("load", onLoadResize);
+
       //Put Image into Content
       contentDiv.appendChild(img);
+
       //Put content into grid
       grid.appendChild(contentDiv);
+
+      //Add delete Button
+      grid.appendChild(addDeleteButton());
       //Put grid into container
       container.appendChild(grid);
+
    });
+}
+
+function addDeleteButton(){
+   let button = document.createElement("button");
+   button.className = "deleteButton";
+   button.textContent = "X";
+   button.addEventListener("click", event => {
+      let container = event.target.parentElement;
+      let index = container.dataset.listIndex;
+      container.remove();
+   });
+
+   return button;
 }
