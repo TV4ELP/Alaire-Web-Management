@@ -1,5 +1,38 @@
+
+/* colors to theme everything */
+:root {
+   --dark: #024040;
+   --medium-dark: #025940;
+   --medium: #177348;
+   --medium-light: #40aa65;
+   --medium-light-trasparent: #40aa657e;
+   --light: #99BF88;
+
+   --default-padding: 1em;
+ }
+
+ h1{
+    color: var(--dark);
+ }
+
+
+select {
+   appearance: none;
+   font-size: 1em;
+   padding: var(--default-padding);
+   background: var(--medium-light);
+   border: 0;
+   color: var(--medium-dark);
+   text-align: center;
+}
+
+
+.listNameDropDown {
+
+ }
+
 body{
-   background-color: cadetblue;
+   background-color: var(--light);
    font-size: 1em;
 }
 
@@ -12,14 +45,16 @@ body{
 
 .navbar{
    grid-area: navbar;
+   padding: var(--default-padding);
 }
 
 .list{
    grid-area: list;
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-   grid-auto-rows: 10px;
-   gap: 0.1rem;
+   grid-auto-rows: 20px;
+   gap: 5px;
+   padding: var(--default-padding);
 }
 
 .imageContainer{
@@ -29,6 +64,14 @@ body{
 /* when you hover the container, you set the display on the button. */
 .imageContainer:hover .deleteButton {
    display: inline-block;
+}
+
+.imageContainer:hover .imageName {
+   display: inline-block;
+}
+
+.imageContainer:hover img {
+   filter: blur(6px);
 }
 
 .deleteButton {
@@ -44,6 +87,19 @@ body{
    cursor: pointer;
 }
 
+.imageName {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--medium-light-trasparent);
+  font-size: 2em;
+  backdrop-filter: blur(10px);
+  color: var(--dark);
+  cursor: pointer;
+}
+
 
 .imageContainer img{
    width: 100%;
@@ -51,3 +107,11 @@ body{
    object-fit: contain;
 }
 
+/* Possible Vertical align Methode. We don't really care right now
+.content{
+  position: relative;
+  display: inline-block;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+*/

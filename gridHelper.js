@@ -6,9 +6,10 @@ function GridHelperOnLoad(){
 
 function resizeGridItem(item){
    let grid = document.querySelector('.grid-container .list');
-   rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-   rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-   rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+   let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+   let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+   let itemheight = item.querySelector('.content').getBoundingClientRect().height;
+   rowSpan = Math.ceil((itemheight) / (rowHeight + rowGap));
    item.style.gridRowEnd = "span "+rowSpan;
 }
 

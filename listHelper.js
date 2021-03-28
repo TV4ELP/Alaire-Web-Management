@@ -10,36 +10,74 @@ function ListHelperOnLoad(){
    defaultOption.text = "Please choose a list";
    select.add(defaultOption);
    
+   putOptions(select);
+}
+
+
+//Request Options from API and put them into select Tag
+async function putOptions(select){
+   let res = await makeRequest("get", getBaseUrl() + "/lists");
    //now add all options
+
+   let list = JSON.parse(res);
    list.forEach(element => {
-      const keys = Object.keys(element);
       let option = document.createElement("option");
-      option.text = keys[0];
-      option.value = keys[0];
+      option.text = element;
+      option.value = element;
       select.add(option);
    });
 }
 
+
+function makeRequest(method, url, postParameter) {
+   return new Promise(function (resolve, reject) {
+       let xhr = new XMLHttpRequest();
+       xhr.open(method, url);
+       if(method == "post"){
+         xhr.setRequestHeader("Content-Type", "application/json");
+       }
+       xhr.onload = function () {
+           if (this.status >= 200 && this.status < 300) {
+               resolve(xhr.response);
+           } else {
+               reject({
+                   status: this.status,
+                   statusText: xhr.statusText
+               });
+           }
+       };
+       xhr.onerror = function () {
+           reject({
+               status: this.status,
+               statusText: xhr.statusText
+           });
+       };
+       if(postParameter){
+         xhr.send(JSON.stringify(postParameter));
+       }else{
+          xhr.send();
+       }
+   });
+}
+
+function getBaseUrl(){
+   const pathname = window.location.pathname.substring(1); 
+   const pathArray = pathname.split("/", 2);
+
+   return "/" + pathArray[0] + "/" + pathArray[1];
+}
+
 //Add all images
-function fillWithListOnchange(){
+async function fillWithListOnchange(){
    let listName = this.value;
    let container = document.querySelector('.grid-container .list');
-   const json = getListWithName(listName);
+   let res = await makeRequest("get", getBaseUrl() + "/list/" + listName);
+   
+   const json = JSON.parse(res);
 
    if(json) {
       doADumbPrintPls(container, json);
    }
-}
-
-
-//Get a list with a name from the global List Variable
-function getListWithName(name){
-   var ret = undefined;
-   list.forEach(element => {
-      const listname = Object.keys(element)[0];
-      if(name === listname) ret = element[listname];
-   });
-   return ret;
 }
 
 
@@ -69,6 +107,10 @@ function doADumbPrintPls(container, json){
 
       //Add delete Button
       grid.appendChild(addDeleteButton());
+
+      //Add ImageName
+      grid.appendChild(addImageName(element.name));
+
       //Put grid into container
       container.appendChild(grid);
 
@@ -86,4 +128,19 @@ function addDeleteButton(){
    });
 
    return button;
+}
+
+function addImageName(name){
+   let span = document.createElement("span");
+   let text = "No Name Set";
+   if(name){
+      text = name;
+   }
+   span.className = "imageName";
+   span.textContent = text;
+   span.addEventListener("click", event => {
+      //rename
+   });
+
+   return span;
 }

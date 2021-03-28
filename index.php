@@ -7,10 +7,24 @@ function Sorry(){
    echo file_get_contents("sorry.html");
 }
 
-function DisplayPictures($listHelper){
+function Login($listHelper){
    $html = file_get_contents("main.html");
-   $jsonHTML = str_replace("!%%%JSON%%%!", json_encode($listHelper->_payload), $html);
-   echo $jsonHTML;
+   echo $html;
+}
+
+function ApiTree($listHelper, $path){
+   switch ($path[2]) {
+      case 'lists':
+         return json_encode($listHelper->getAllLists());
+         break;
+   
+      case 'list':
+         return json_encode($listHelper->getListImages($path[3]));
+         break;
+      default:
+         # code...
+         break;
+   }
 }
 
 //Get The Request URL from the HTACCESS FILE
@@ -23,13 +37,22 @@ $pathArray = explode('/', $cleanUrl);
 if(array_key_exists(0, $pathArray) && array_key_exists(1, $pathArray)){
    $uuid = $pathArray[0];
    $loginKey = $pathArray[1];
+
+   //Login
    $listHelper = new listHelper($uuid, $loginKey);
    $loginCool = $listHelper->isLoginCorrect();
    if(!$loginCool){
       Sorry();
-   }else{
-      DisplayPictures($listHelper);
+      return;
    }
+   //We don't have any Endpoint. Show the default interface
+   if(!array_key_exists(2, $pathArray)){
+         Login($listHelper);
+         return;
+   }else{
+      echo ApiTree($listHelper, $pathArray);
+   }
+
 }else{
    Sorry();
 }

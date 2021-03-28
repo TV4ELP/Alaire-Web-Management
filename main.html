@@ -2,15 +2,11 @@
 <html>
    <head>
       <link rel="stylesheet" href="/style.css" type="text/css">
-      <script>
-         let list = !%%%JSON%%%!;
-      </script>
        <script src="/listHelper.js"></script> 
        <script src="/gridHelper.js"></script> 
        <script>
          window.onload = function () {
             ListHelperOnLoad();
-            GridHelperOnLoad();
          };
        </script>
    </head>
@@ -18,7 +14,12 @@
       <h1>Version 0.1c List Management</h1>
       <div class="grid-container">
          <div class="navbar">
-            <select id="listsDropDown"></select>
+            <div class="controlls">
+               <div class="listNameDropDown">
+                  <select id="listsDropDown"></select>
+               </div>
+            </div>
+            
          </div>
          <div class="list">
 
