@@ -17,7 +17,7 @@ class listHelper {
       $output = curl_exec($ch);
       curl_close($ch);   
       $json = json_decode($output);
-      if(property_exists($json, "login")){
+      if($json && property_exists($json, "login")){
          $login = $json->login;
          return (bool)$login;
       }
