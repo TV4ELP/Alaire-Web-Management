@@ -2,13 +2,15 @@
 <html>
    <head>
       <link rel="stylesheet" href="/style.css" type="text/css">
-       <script src="/listHelper.js"></script> 
-       <script src="/gridHelper.js"></script> 
-       <script>
+      <script src="/Notifications.js"></script>
+      <script src="/listHelper.js"></script> 
+      <script src="/gridHelper.js"></script> 
+      <script>
          window.onload = function () {
             ListHelperOnLoad();
+            NotifyOnload();
          };
-       </script>
+      </script>
    </head>
    <body>
       <h1>Version 0.1c List Management</h1>
@@ -24,6 +26,9 @@
          <div class="list">
 
          </div>
+      </div>
+      <div class="hidden" id="notification" onclick="">
+         <!-- This is just a placeholder. The JS will fill it-->
       </div>
    </body>
 </html>
