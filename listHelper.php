@@ -67,4 +67,21 @@ class listHelper {
 
       return false;
    }
+
+   public function removeListIndex(){
+      $ch = $this->CurlInit("delete");
+      //get the post parameter as json
+      $_POST = file_get_contents('php://input');
+      //Send it in the post fields
+      curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
+      //needed so expressjs knows whats up
+      curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+      $output = curl_exec($ch);
+      curl_close($ch);   
+      $json = json_decode($output);
+      
+
+      return true;
+   }
 }

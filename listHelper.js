@@ -124,10 +124,20 @@ function addDeleteButton(){
    button.addEventListener("click", event => {
       let container = event.target.parentElement;
       let index = container.dataset.listIndex;
+      deleteItem(index); // delete the actual item from the database
       container.remove();
    });
 
    return button;
+}
+
+async function deleteItem(index){
+   let dropDown = document.querySelector("#listsDropDown");
+   const listName = dropDown.value;
+   let res = await makeRequest("post", getBaseUrl() + "/delete", {listName : listName, index : index});
+   if(res){
+      Notify("Image Deleted");
+   }
 }
 
 function addImageName(name){

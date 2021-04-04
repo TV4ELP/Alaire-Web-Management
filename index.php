@@ -21,6 +21,10 @@ function ApiTree($listHelper, $path){
       case 'list':
          return json_encode($listHelper->getListImages($path[3]));
          break;
+
+      case 'delete':
+         return json_encode($listHelper->removeListIndex());
+         break;
       default:
          # code...
          break;

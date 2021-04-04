@@ -107,6 +107,28 @@ body{
    object-fit: contain;
 }
 
+#notification{
+   background: var(--medium-light);
+   color: var(--medium);
+   font-size: 1.5em;
+   padding: var(--default-padding);
+   position: absolute;
+   top: 5%;
+   right: 50%;
+
+   border: 2px solid var(--dark);
+
+   transition: opacity 0.5s linear;
+}
+
+#notification.hidden{
+   opacity: 0;
+}
+
+#notification.visible{
+   opacity: 1;
+}
+
 /* Possible Vertical align Methode. We don't really care right now
 .content{
   position: relative;
